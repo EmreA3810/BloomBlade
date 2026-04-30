@@ -1,0 +1,28 @@
+# Unity (project is under ./BloomBlade)
+/BloomBlade/[Ll]ibrary/
+/BloomBlade/[Tt]emp/
+/BloomBlade/[Oo]bj/
+/BloomBlade/[Bb]uild/
+/BloomBlade/[Bb]uilds/
+/BloomBlade/[Ll]ogs/
+/BloomBlade/[Uu]ser[Ss]ettings/
+/BloomBlade/MemoryCaptures/
+/BloomBlade/Assets/AssetStoreTools*
+
+# Rider / VS / VSCode
+/.vscode/
+/BloomBlade/.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# OS / misc
+.DS_Store
+Thumbs.db
