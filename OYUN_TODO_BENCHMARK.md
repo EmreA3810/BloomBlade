@@ -8,9 +8,9 @@ Durum işaretleri: `⬜ Bekliyor` `🔄 Yapılıyor` `✅ Bitti`
   Benchmark: Player 8 yön hareket + SpringState saldırı + 1 WeedEnemy kovalamaca/hasar + tek sahnede 5 dk oynanış.
 - [x] **Aşama 2 (✅)** Mevsim geçiş sistemi  
   Benchmark: Bahar/Yaz/Sonbahar/Kış anlık geçiş + her state farklı saldırı + temel cooldown/energy.
-- [ ] **Aşama 3 (🔄)** Roguelike core loop  
+- [x] **Aşama 3 (✅)** Roguelike core loop  
   Benchmark: Oda temizle->ödül + en az 3 boon + ölüm->hub dönüş.
-- [ ] **Aşama 4 (⬜)** Prosedürel oda üretimi  
+- [ ] **Aşama 4 (🔄)** Prosedürel oda üretimi  
   Benchmark: Grid tabanlı üretim + geçerli spawn/path + 20+ layout varyasyonu.
 - [ ] **Aşama 5 (⬜)** Hub ve kalıcı ilerleme  
   Benchmark: kalıcı kaynak kaydı + görsel hub onarımı + en az 2 kalıcı upgrade.
@@ -23,7 +23,7 @@ Durum işaretleri: `⬜ Bekliyor` `🔄 Yapılıyor` `✅ Bitti`
 
 ## Adım Adım Çalışma Planı
 
-> Kural: **Şu an Adım 3 aktif. Adım 3 bitince Adım 4'e geçilecek.**
+> Kural: **Şu an Adım 4 aktif. Adım 4 bitince Adım 5'e geçilecek.**
 
 ### Adım 1 — Prototip (Tamamlandı ✅)
 
@@ -43,11 +43,19 @@ Durum işaretleri: `⬜ Bekliyor` `🔄 Yapılıyor` `✅ Bitti`
 - [x] Her state için farklı saldırı davranışı
 - [x] Energy/Cooldown temel dengesi
 
-### Adım 3 — Roguelike Core Loop (Şu an bunu yapıyoruz 🔄)
+### Adım 3 — Roguelike Core Loop (Tamamlandı ✅)
 
 - [x] Oda temizlenince ödül seçim ekranı aç
 - [x] En az 3 boon (ör: +hasar, +hız, +can)
-- [ ] Oyuncu ölünce hub sahnesine dön
-- [ ] Hub'dan run başlatma butonu
-- [ ] Tek run akışını baştan sona oynanabilir yap
+- [x] Oyuncu ölünce hub sahnesine dön
+- [x] Hub'dan run başlatma butonu
+- [x] Tek run akışını baştan sona oynanabilir yap
+
+### Adım 4 — Prosedürel Oda Üretimi (Şu an bunu yapıyoruz 🔄)
+
+- [x] Oda prefab listesi oluştur (Start, Combat, Reward)
+- [ ] Basit grid tabanlı oda dizilimi üret (3x1 başlangıç)
+- [ ] Spawn noktalarını odaya göre kullan
+- [ ] Oyuncuyu odalar arası geçirecek kapı tetikleri ekle
+- [ ] Her run'da farklı 3+ oda sırası doğrula
 

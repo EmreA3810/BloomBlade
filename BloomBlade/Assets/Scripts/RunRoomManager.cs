@@ -17,6 +17,7 @@ public class RunRoomManager : MonoBehaviour
     public void EnemyKilled()
     {
         enemiesLeft--;
+        if (enemiesLeft < 0) enemiesLeft = 0;
 
         if (enemiesLeft <= 0)
         {
@@ -25,5 +26,10 @@ public class RunRoomManager : MonoBehaviour
 
             Time.timeScale = 0f;
         }
+    }
+
+    public void RegisterEnemySpawn()
+    {
+        enemiesLeft++;
     }
 }
