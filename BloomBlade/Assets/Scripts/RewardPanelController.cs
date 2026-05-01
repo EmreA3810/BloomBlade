@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -6,6 +7,8 @@ using UnityEngine.InputSystem;
 public class RewardPanelController : MonoBehaviour
 {
     public PlayerRunStats playerStats;
+    public bool returnToHubAfterPick = true;
+    public string hubSceneName = "HubScene";
 
     void Awake()
     {
@@ -49,7 +52,11 @@ public class RewardPanelController : MonoBehaviour
     private void ClosePanel()
     {
         Time.timeScale = 1f;
-        gameObject.SetActive(false);
+
+        if (returnToHubAfterPick)
+            SceneManager.LoadScene(hubSceneName);
+        else
+            gameObject.SetActive(false);
     }
 
     private static bool PressedDigit1()

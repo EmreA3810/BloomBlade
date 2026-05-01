@@ -11,9 +11,7 @@ public class GameManager : MonoBehaviour
     public string hubSceneName = "HubScene";
 
     private bool isGameOver;
-    private bool hasSeenEnemy;
-    private string endMessage = "OLDUN\nYeniden baslamak icin SPACE'e bas";
-    private bool loadHubOnConfirm;
+    private string endMessage = "OLDUN\nHub'a donmek icin SPACE'e bas";
     private readonly GUIStyle gameOverStyle = new GUIStyle();
 
     void Awake()
@@ -36,28 +34,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (!isGameOver)
-        {
-            int enemyCount = FindObjectsByType<WeedEnemy>().Length;
-            if (enemyCount > 0) hasSeenEnemy = true;
-            if (hasSeenEnemy && enemyCount == 0) EndGame("KAZANDIN\nYeniden baslamak icin SPACE'e bas");
-            return;
-        }
+        if (!isGameOver) return;
 
         if (PressedSpace())
         {
             Time.timeScale = 1f;
-
-            if (loadHubOnConfirm)
-                SceneManager.LoadScene(hubSceneName);
-            else
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(hubSceneName);
         }
     }
 
     public void GameOver()
     {
-        loadHubOnConfirm = true;
         EndGame("OLDUN\nHub'a donmek icin SPACE'e bas");
     }
 

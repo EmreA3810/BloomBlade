@@ -7,6 +7,15 @@ using UnityEngine.InputSystem;
 public class HubRunStarter : MonoBehaviour
 {
     public string runSceneName = "RunScene";
+    public bool showHubHint = true;
+    private readonly GUIStyle hintStyle = new GUIStyle();
+
+    void Awake()
+    {
+        hintStyle.alignment = TextAnchor.MiddleCenter;
+        hintStyle.fontSize = 28;
+        hintStyle.normal.textColor = Color.white;
+    }
 
     public void StartRun()
     {
@@ -18,6 +27,17 @@ public class HubRunStarter : MonoBehaviour
     {
         if (PressedSpace())
             StartRun();
+    }
+
+    void OnGUI()
+    {
+        if (!showHubHint) return;
+
+        GUI.Label(
+            new Rect(0, 0, Screen.width, Screen.height),
+            "HUB\nRun baslatmak icin SPACE'e bas",
+            hintStyle
+        );
     }
 
     private static bool PressedSpace()
