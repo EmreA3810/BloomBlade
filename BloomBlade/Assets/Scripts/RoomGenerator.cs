@@ -60,6 +60,9 @@ public class RoomGenerator : MonoBehaviour
             Instantiate(enemyPrefab, spawn.position, Quaternion.identity);
             if (roomManager != null) roomManager.RegisterEnemySpawn();
         }
+
+        // Tüm spawn'lar bitti → RunRoomManager'ı aktif et
+        if (roomManager != null) roomManager.FinalizeEnemyCount();
     }
 
     private void SetupDoors()
