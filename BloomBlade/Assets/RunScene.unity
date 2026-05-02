@@ -1154,6 +1154,58 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1476080804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476080806}
+  - component: {fileID: 1476080805}
+  m_Layer: 0
+  m_Name: RoomGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1476080805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476080804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a831db5546a81cd4280a4c55e61bfbf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomGenerator
+  roomPrefabs:
+  - {fileID: 1974033275482387410, guid: eef4f0052e094d24093b6fc31b2fe69d, type: 3}
+  - {fileID: 2331450595259017794, guid: f73294f779fcc414eb7cf033e15d349f, type: 3}
+  - {fileID: 4528349619985540893, guid: aa082542726560b449d387269af46555, type: 3}
+  enemyPrefab: {fileID: 2118547989}
+  player: {fileID: 1563205236}
+  roomSpacing: 18
+  roomCount: 3
+--- !u!4 &1476080806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476080804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 133.19724, y: 94.08144, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1527594959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,3 +2094,4 @@ SceneRoots:
   - {fileID: 905611558}
   - {fileID: 1749142984}
   - {fileID: 1914349763}
+  - {fileID: 1476080806}
