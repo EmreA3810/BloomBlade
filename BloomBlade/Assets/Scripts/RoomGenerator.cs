@@ -48,42 +48,71 @@ public class RoomGenerator : MonoBehaviour
 
     private void SetupEnemySpawns()
     {
-        if (enemyPrefab == null) return;
-
-        RunRoomManager roomManager = FindAnyObjectByType<RunRoomManager>();
-        foreach (GameObject room in spawnedRooms)
+        if (enemyPrefab == null)
         {
-            Transform spawn = room.transform.Find("Spawn_Enemy");
-            if (spawn == null) continue;
-            if (room.name.Contains("Reward")) continue;
-
-            Instantiate(enemyPrefab, spawn.position, Quaternion.identity);
-            if (roomManager != null) roomManager.RegisterEnemySpawn();
+            Debug.LogError("[RoomGenerator] Enemy Prefab atanmamış! Inspector'da Enemy Prefab alanını doldur.");
+            FindAnyObjectByType<RunRoomManager>()?.FinalizeEnemyCount();
+            return;
         }
 
-        // Tüm spawn'lar bitti → RunRoomManager'ı aktif et
-        if (roomManager != null) roomManager.FinalizeEnemyCount();
+        RunRoomManager roomManager = FindAnyObjectByType<RunRoomManager>();
+        int spawnedCount = 0;
+
+        foreach (GameObject room in spawnedRooms)
+        {
+            // Reward odasına düşman spawn etme
+            if (room.name.Contains("Reward")) continue;
+
+            Transform spawn = room.transform.Find("Spawn_Enemy");
+            if (spawn == null)
+            {
+                Debug.LogWarning($"[RoomGenerator] '{room.name}' odasında 'Spawn_Enemy' bulunamadı. Child ismi doğru mu?");
+                continue;
+            }
+
+            Instantiate(enemyPrefab, spawn.position, Quaternion.identity);
+            roomManager?.RegisterEnemySpawn();
+            spawnedCount++;
+        }
+
+        Debug.Log($"[RoomGenerator] Toplam {spawnedCount} düşman spawn edildi.");
+        roomManager?.FinalizeEnemyCount();
     }
 
     private void SetupDoors()
     {
+        // TÜM odaların Door_Right collider'ını temizle ve trigger yap
+        foreach (GameObject room in spawnedRooms)
+        {
+            Transform door = room.transform.Find("Door_Right");
+            if (door == null) continue;
+
+            // Prefabdan gelen tüm eski collider'ları sil, temiz başla
+            foreach (BoxCollider2D old in door.GetComponents<BoxCollider2D>())
+                Destroy(old);
+        }
+
+        // Geçiş kapılarını kur (son oda hariç)
         for (int i = 0; i < spawnedRooms.Count - 1; i++)
         {
             Transform door = spawnedRooms[i].transform.Find("Door_Right");
             Transform nextSpawn = spawnedRooms[i + 1].transform.Find("Spawn_Player");
-            if (door == null || nextSpawn == null) continue;
-
-            BoxCollider2D collider = door.GetComponent<BoxCollider2D>();
-            if (collider == null)
+            if (door == null || nextSpawn == null)
             {
-                collider = door.gameObject.AddComponent<BoxCollider2D>();
-                collider.size = new Vector2(1.2f, 2f);
+                Debug.LogWarning($"[RoomGenerator] Oda {i}: Door_Right veya sonraki Spawn_Player bulunamadı.");
+                continue;
             }
-            collider.isTrigger = true;
+
+            // Yeni temiz trigger collider ekle
+            BoxCollider2D col = door.gameObject.AddComponent<BoxCollider2D>();
+            col.size = new Vector2(1f, 3f);
+            col.isTrigger = true;
 
             RoomDoor roomDoor = door.GetComponent<RoomDoor>();
             if (roomDoor == null) roomDoor = door.gameObject.AddComponent<RoomDoor>();
             roomDoor.targetSpawn = nextSpawn;
+
+            Debug.Log($"[RoomGenerator] Kapı kuruldu: Oda {i} → Oda {i + 1} ({nextSpawn.position})");
         }
     }
 

@@ -6,44 +6,56 @@ public class WeedEnemy : MonoBehaviour
     public int maxHealth = 60;
     public int touchDamage = 10;
     public float damageInterval = 1f;
-    public float touchDistance = 0.7f;
+    public float touchDistance = 0.8f;
 
     private int currentHealth;
     private Transform player;
     private PlayerHealth playerHealth;
     private float nextDamageTime;
+    private Rigidbody2D rb;
 
     void Start()
     {
         currentHealth = maxHealth;
+
+        rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            // Kinematic: hareket MoveTowards ile yapılır, fizik kuvveti almaz → savrulmaz
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        }
+
+        // Önce tag ile bul, yoksa component ile bul
         GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p == null)
+        {
+            PlayerHealth ph = FindAnyObjectByType<PlayerHealth>();
+            if (ph != null) p = ph.gameObject;
+        }
+
         if (p != null)
         {
             player = p.transform;
             playerHealth = p.GetComponent<PlayerHealth>();
+        }
+        else
+        {
+            Debug.LogWarning("[WeedEnemy] Player bulunamadı! Tag 'Player' olarak ayarlandı mı?");
         }
     }
 
     void Update()
     {
         if (player == null) return;
-        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
 
-        // Physics ayarı farklı olsa bile yakın temasta hasar vermeyi garanti et
+        // Kinematic rigidbody → transform ile taşı
+        Vector2 newPos = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+        transform.position = newPos;
+
+        // Mesafe tabanlı hasar (en güvenilir yöntem)
         if (Vector2.Distance(transform.position, player.position) <= touchDistance)
             TryDealTouchDamage(playerHealth);
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag("Player")) return;
-        TryDealTouchDamage(collision.gameObject.GetComponent<PlayerHealth>());
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (!other.CompareTag("Player")) return;
-        TryDealTouchDamage(other.GetComponent<PlayerHealth>());
     }
 
     private void TryDealTouchDamage(PlayerHealth ph)
@@ -66,3 +78,4 @@ public class WeedEnemy : MonoBehaviour
         }
     }
 }
+
